@@ -35,7 +35,7 @@ elif status == 'LED':
 
     glass = st.sidebar.number_input('유리 투과율 ***(%)***', 0.0, 100.0) 
 
-    bright = st.sidebar.number_input('조명 광도 ***(%)***', 0.0, 100.0)
+    bright = st.sidebar.number_input('조명 광도 ***$(cd/m^2)$***', 0.0, 100.0)
 
     back_il = st.sidebar.number_input('배경 휘도 ***$(cd/m^2)$***', 0.0, value=10.0) 
 
