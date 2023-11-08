@@ -35,7 +35,7 @@ elif status == 'LED':
 
     glass = st.sidebar.number_input('유리 투과율 ***(%)***', 0.0, 100.0) 
 
-    bright = st.sidebar.number_input('조명 광도 ***$(cd/m^2)$***', 0.0, 100.0)
+    bright = st.sidebar.number_input('조명 광도 ***$(cd/m^2)$***', 0.0)
 
     back_il = st.sidebar.number_input('배경 휘도 ***$(cd/m^2)$***', 0.0, value=10.0) 
 
@@ -105,7 +105,7 @@ st.subheader('2. 타깃 수용도에 따른 각 인자 값 계산')
 st.caption('•  원하는 수용도 값을 입력하고 필요한 인자 값 하나 얻기')
 acm_slider = st.slider('수용도 (%)', 0, 100, 75, 5)
 status2 = st.radio('**:bulb: 얻고자 하는 인자값을 선택하세요**',['명(광)도', '유리 투과율', '글꼴높이'])
-col3,col4 = st.columns([8,2])
+col3,col4 = st.columns([7,3])
 
 #(명)광도 얻기
 # lcd_acm=(1 / (1 + np.exp(-(0.01997*illum + 1.19709*text -6.3165))))*100 #수용도 계산
@@ -134,6 +134,7 @@ if status2=='명(광)도':
                     text_il=0
                 else:
                     text_il=text_il
+                illum=text_il/back_il
                 df=pd.DataFrame({
                     '유리 투과율':[glass], '글꼴 휘도': [text_il], '배경 휘도': [back_il],'휘도 대비': [illum], '글꼴 높이': [text], '수용도': [acm_slider]})
                 st.dataframe(df, hide_index=True, width=500)
@@ -149,8 +150,6 @@ if status2=='명(광)도':
                 led_bright=(6.9123-math.log(100/acm_slider-1)-1.18998*text)*back_il/(0.02389*(glass/100))
                 if led_bright<0:
                     led_bright=0
-                elif led_bright>100:
-                    led_bright=100
                 else:
                     led_bright=led_bright
                 text_il=led_bright*(glass/100)
@@ -158,6 +157,7 @@ if status2=='명(광)도':
                     text_il=0
                 else:
                     text_il=text_il
+                illum=text_il/back_il
                 df=pd.DataFrame({
                     '유리 투과율':[glass], '글꼴 휘도': [text_il], '배경 휘도': [back_il],'휘도 대비': [illum], '글꼴 높이': [text], '수용도': [acm_slider]})
                 st.dataframe(df, hide_index=True, width=500)
@@ -171,7 +171,7 @@ if status2=='명(광)도':
             ColourWidgetText("{0:.2f}%".format(lcd_bright), '#4068cf') 
 
         elif status == 'LED':
-            st.metric(label="조명 광도", value="{0:.2f}%".format(led_bright))
+            st.metric(label="조명 광도", value="{0:.0f}cd/m2".format(led_bright))
             ColourWidgetText("{0:.2f}%".format(led_bright), '#4068cf') 
 
 
@@ -197,7 +197,7 @@ if status2=='유리 투과율':
                 else:
                     lcd_glass=lcd_glass
                 text_il=(0.009 * (bright)**2 - 0.02*bright)*(lcd_glass/100)
-
+                illum=text_il/back_il
                 df=pd.DataFrame({
                     '글꼴 명도':[bright], '글꼴 휘도': [text_il], '배경 휘도': [back_il],'휘도 대비': [illum], '글꼴 높이': [text], '수용도': [acm_slider]})
                 st.dataframe(df, hide_index=True, width=500)
@@ -218,6 +218,7 @@ if status2=='유리 투과율':
                     led_glass=led_glass
                 
                 text_il=bright*(led_glass/100)
+                illum=text_il/back_il
                 df=pd.DataFrame({
                     '조명 광도':[bright], '글꼴 휘도': [text_il], '배경 휘도': [back_il],'휘도 대비': [illum], '글꼴 높이': [text], '수용도': [acm_slider]})
                 st.dataframe(df, hide_index=True, width=500)
@@ -260,6 +261,10 @@ if status2=='글꼴높이':
                     lcd_text=100
                 else:
                     lcd_text=lcd_text
+                #lcd 글꼴휘도
+                text_il=(0.009 * (bright)**2 - 0.02*bright)*(glass/100)
+                #휘도대비
+                illum=text_il/back_il
                 df=pd.DataFrame({
                     '유리 투과율': [glass], '글꼴 명도':[bright], '글꼴 휘도': [text_il], '배경 휘도': [back_il],'휘도 대비': [illum], '수용도': [acm_slider]})
                 st.dataframe(df, hide_index=True, width=500)
@@ -281,6 +286,10 @@ if status2=='글꼴높이':
                     led_text=100
                 else:
                     led_text=led_text
+                #led 글꼴휘도
+                text_il=bright*(glass/100)
+                #lcd휘도대비
+                illum=text_il/back_il
                 df=pd.DataFrame({
                     '유리 투과율': [glass], '조명 광도':[bright], '글꼴 휘도': [text_il], '배경 휘도': [back_il],'휘도 대비': [illum], '수용도': [acm_slider]})
                 st.dataframe(df, hide_index=True, width=500)
