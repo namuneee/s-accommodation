@@ -20,24 +20,24 @@ status = st.sidebar.radio(
     ['LCD','LED'])
 if status == 'LCD':
     
-    text = st.sidebar.number_input('글꼴높이 ***$(mm)$***', 0.0) 
+    text = st.sidebar.number_input('글꼴높이 (mm)', 0.0) 
 
-    glass = st.sidebar.number_input('유리 투과율 ***(%)***', 0.0, 100.0) 
+    glass = st.sidebar.number_input('유리 투과율 (%)', 0.0, 100.0) 
 
-    bright = st.sidebar.number_input('글꼴 명도 ***(%)***', 0.0, 100.0) 
+    bright = st.sidebar.number_input('글꼴 명도 (%)', 0.0, 100.0) 
 
-    back_il = st.sidebar.number_input('배경 휘도 ***$(cd/m^2)$***', 0.0, value=1.0) 
+    back_il = st.sidebar.number_input('배경 휘도 (cd/m\u00b2)', 0.0, value=1.0) 
     
 
 elif status == 'LED':
 
-    text = st.sidebar.number_input('글꼴높이 ***$(mm)$***', 0.0) 
+    text = st.sidebar.number_input('글꼴높이 (mm)', 0.0) 
 
-    glass = st.sidebar.number_input('유리 투과율 ***(%)***', 0.0, 100.0) 
+    glass = st.sidebar.number_input('유리 투과율 (%)', 0.0, 100.0) 
 
-    bright = st.sidebar.number_input('조명 광도 ***$(cd/m^2)$***', 0.0)
+    bright = st.sidebar.number_input('조명 광도 (cd/m\u00b2)', 0.0)
 
-    back_il = st.sidebar.number_input('배경 휘도 ***$(cd/m^2)$***', 0.0, value=10.0) 
+    back_il = st.sidebar.number_input('배경 휘도 (cd/m\u00b2)', 0.0, value=10.0) 
 
 
 #보이는 페이지 1번. 수용도 계산
@@ -45,8 +45,8 @@ col1,col2 = st.columns([8,2]) # 공간을 2:3 으로 분할하여 col1과 col2�
 
 with col1 :
     if status =='LCD':
-        st.caption('•  휘도대비 $(cd/m^2)$ : 글꼴 휘도/배경휘도')
-        st.caption('•  글꼴휘도 $(cd/m^2)$ : {0.009(글꼴명도(%))$^2$ - 0.02글꼴명도(%)}x유리투과율')
+        st.caption('•  휘도대비 (cd/m\u00b2) : 글꼴휘도 / 배경휘도')
+        st.caption('•  글꼴휘도 (cd/m\u00b2) : {0.009(글꼴명도(%))$^2$ - 0.02글꼴명도(%)} x 유리투과율')
 
         #lcd 글꼴휘도
         text_il=(0.009 * (bright)**2 - 0.02*bright)*(glass/100)
@@ -55,17 +55,17 @@ with col1 :
 
         lcd_acm=(1 / (1 + np.exp(-(0.01997*illum + 1.19709*text -6.3165))))*100 #수용도 계산
         df=pd.DataFrame({
-              '휘도대비 (cd/m2)': [illum], '글꼴높이 (mm)': [text]})
+              '휘도대비 (cd/m\u00b2)': [illum], '글꼴높이 (mm)': [text]})
         st.dataframe(df, hide_index=True, width=500)
 
         df=pd.DataFrame({
-             '유리 투과율 (%)':[glass], '글꼴 명도 (%)': [bright], '글꼴휘도 (cd/m2)': [text_il], '배경휘도 (cd/m2)': [back_il]})
+             '유리 투과율 (%)':[glass], '글꼴 명도 (%)': [bright], '글꼴휘도 (cd/m\u00b2)': [text_il], '배경휘도 (cd/m\u00b2)': [back_il]})
         st.dataframe(df, hide_index=True, width=500)
         
 
     elif status == 'LED':
-        st.caption('•  휘도대비 $(cd/m^2)$ : 글꼴 휘도/배경휘도')
-        st.caption('•  글꼴휘도 $(cd/m^2)$ : 조명광도x유리투과율')
+        st.caption('•  휘도대비 (cd/m\u00b2) : 글꼴휘도 / 배경휘도')
+        st.caption('•  글꼴휘도 (cd/m\u00b2) : 조명광도 x 유리투과율')
         
         #led 글꼴휘도
         text_il=bright*(glass/100)
@@ -74,11 +74,11 @@ with col1 :
 
         led_acm=(1 / (1 + np.exp(-(0.02389*illum + 1.18998*text -6.9123))))*100 #수용도 계산
         df=pd.DataFrame({
-            '휘도대비 (cd/m2)': [illum], '글꼴높이 (mm)': [text]})
+            '휘도대비 (cd/m\u00b2)': [illum], '글꼴높이 (mm)': [text]})
         st.dataframe(df, hide_index=True, width=500)
 
         df=pd.DataFrame({
-            '유리 투과율 (%)':[glass], '조명 광도 (cd/m2)': [bright], '글꼴휘도 (cd/m2)': [text_il], '배경휘도 (cd/m2)': [back_il]})
+            '유리 투과율 (%)':[glass], '조명 광도 (cd/m\u00b2)': [bright], '글꼴휘도 (cd/m\u00b2)': [text_il], '배경휘도 (cd/m\u00b2)': [back_il]})
         st.dataframe(df, hide_index=True, width=500)
 
         
@@ -115,7 +115,7 @@ if status2=='명(광)도':
     with col3 :
         if status =='LCD':
             st.markdown('✅ 왼쪽 사이드바에 **글꼴 높이**, **유리 투과율**, **배경 휘도**를 입력하시오')
-            st.caption('•  배경 휘도 default value: 1 $(cd/m^2)$')
+            st.caption('•  배경 휘도 default value: 1 (cd/m\u00b2)')
             if (acm_slider==0)|(acm_slider==100)|(glass==0):
                 st.error('[계산 불가] 입력하신 인자 값을 다시 확인하세요')
                 lcd_bright=0
@@ -142,7 +142,7 @@ if status2=='명(광)도':
      
         elif status == 'LED':
             st.markdown('✅ 왼쪽 사이드바에 **글꼴 높이**, **유리 투과율**, **배경 휘도**를 입력하시오')
-            st.caption('•  배경 휘도 default value: 10 $(cd/m^2)$')
+            st.caption('•  배경 휘도 default value: 10 (cd/m\u00b2)')
             if (acm_slider==0) | (acm_slider==100) |(glass==0):
                 st.error('[계산 불가] 입력하신 인자 값을 다시 확인하세요')
                 led_bright=0
@@ -172,8 +172,7 @@ if status2=='명(광)도':
 
         elif status == 'LED':
             st.metric(label="조명 광도", value="{0:.0f}cd/m2".format(led_bright))
-            ColourWidgetText("{0:.2f}%".format(led_bright), '#4068cf') 
-
+            ColourWidgetText("{0:.0f}cd/m2".format(led_bright), '#4068cf') 
 
 #유리투과율 얻기
 # lcd_acm=(1 / (1 + np.exp(-(0.01997*illum + 1.19709*text -6.3165))))*100 #수용도 계산
@@ -183,7 +182,7 @@ if status2=='유리 투과율':
     with col3 :
         if status =='LCD':
             st.markdown('✅ 왼쪽 사이드바에 **글꼴 높이**, **글꼴 명도**, **배경 휘도**를 입력하시오')
-            st.caption('•  배경 휘도 default value: 1 $(cd/m^2)$')
+            st.caption('•  배경 휘도 default value: 1 (cd/m\u00b2)')
             if (acm_slider==0)|(acm_slider==100)|(bright==0):
                 st.error('[계산 불가] 입력하신 인자 값을 다시 확인하세요')
                 lcd_glass=0
@@ -204,7 +203,7 @@ if status2=='유리 투과율':
 
         elif status == 'LED':
             st.markdown('✅ 왼쪽 사이드바에 **글꼴 높이**, **조명 광도**, **배경 휘도**를 입력하시오')
-            st.caption('•  배경 휘도 default value: 10 $(cd/m^2)$')
+            st.caption('•  배경 휘도 default value: 10 (cd/m\u00b2)')
             if (acm_slider==0)|(acm_slider==100)|(bright==0):
                 st.error('[계산 불가] 입력하신 인자 값을 다시 확인하세요')
                 led_glass=0
@@ -246,7 +245,7 @@ if status2=='글꼴높이':
     with col3 :
         if status =='LCD':
             st.markdown('✅ 왼쪽 사이드바에 **유리 투과율**, **글꼴 명도**, **배경 휘도**를 입력하시오')
-            st.caption('•  배경 휘도 default value: 1 $(cd/m^2)$')
+            st.caption('•  배경 휘도 default value: 1 (cd/m\u00b2)')
             if (acm_slider==100) | (acm_slider==0) :
                 st.error('[계산 불가] 입력하신 인자 값을 다시 확인하세요')
                 lcd_text=0
@@ -271,7 +270,7 @@ if status2=='글꼴높이':
             
         elif status == 'LED':
             st.markdown('✅ 왼쪽 사이드바에 **유리 투과율**, **조명 광도**, **배경 휘도**를 입력하시오')
-            st.caption('•  배경 휘도 default value: 10 $(cd/m^2)$')
+            st.caption('•  배경 휘도 default value: 10 (cd/m\u00b2)')
             if (acm_slider==100) | (acm_slider==0) :
                 st.error('[계산 불가] 입력하신 인자 값을 다시 확인하세요')
                 led_text=0
@@ -310,7 +309,7 @@ if status=='LED':
     st.divider()
     st.markdown('###')
     st.subheader('3. (참고) 광도 단위 변환표')
-    st.caption('•  조명 광도 $(cd/m^2)$ : 조명의 설계값 $(lm)$이 아닌, 유백필름 표면 위 휘도계로 측정된 조명의 휘도값')
+    st.caption('•  조명 광도 (cd/m\u00b2) : 조명의 설계값(lm)이 아닌, 유백필름 표면 위 휘도계로 측정된 조명의 휘도값')
     df=pd.DataFrame({
-                    'LED 광도 (%)': [100, 80, 60, 40], 'cd/m2':[1800, 1440, 1080, 720]})
+                    'LED 광도 (%)': [100, 80, 60, 40], 'cd/m\u00b2':[1800, 1440, 1080, 720]})
     st.dataframe(df, hide_index=True, width=300)
