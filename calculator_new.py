@@ -310,6 +310,7 @@ if status=='LED':
     st.divider()
     st.markdown('###')
     st.subheader('3. (참고) 광도 단위 변환표')
+    st.caption('•  조명 광도 $(cd/m^2)$ : 조명의 설계값 $(lm)$이 아닌, 유백필름 표면 위 휘도계로 측정된 조명의 휘도값')
     df=pd.DataFrame({
                     'LED 광도 (%)': [100, 80, 60, 40], 'cd/m2':[1800, 1440, 1080, 720]})
     st.dataframe(df, hide_index=True, width=300)
