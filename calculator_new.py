@@ -119,9 +119,13 @@ if status2=='명(광)도':
             if (acm_slider==0)|(acm_slider==100)|(glass==0):
                 st.error('[계산 불가] 입력하신 인자 값을 다시 확인하세요')
                 lcd_bright=0
+            elif (glass!=0) & (((0.02)**2-4*0.009*(-6.3165+math.log(100/acm_slider-1)+1.19709*text)*100*back_il/(0.01997*glass))<0):
+                st.error('[계산 불가] 입력하신 인자 값을 다시 확인하세요')
+                lcd_bright=0
             else:
-                c=(-6.3165+math.log(100/acm_slider-1)+1.19709*text)*back_il/(0.01997*(glass/100))
-                lcd_bright=( (0.02 + (math.sqrt(math.pow(-0.02,2) - 4 * 0.009 * c)))/2 * 0.009)
+                c=(-6.3165+math.log(100/acm_slider-1)+1.19709*text)*100*back_il/(0.01997*glass)
+                lcd_bright=((0.02 + (math.sqrt(math.pow(-0.02,2) - 4 * 0.009 * c)))/(2 * 0.009))
+
                 if lcd_bright<0:
                     lcd_bright=0
                 elif lcd_bright>100:
@@ -139,7 +143,8 @@ if status2=='명(광)도':
                     '유리 투과율':[glass], '글꼴 휘도': [text_il], '배경 휘도': [back_il],'휘도 대비': [illum], '글꼴 높이': [text], '수용도': [acm_slider]})
                 st.dataframe(df, hide_index=True, width=500)
 
-     
+    
+
         elif status == 'LED':
             st.markdown('✅ 왼쪽 사이드바에 **글꼴 높이**, **유리 투과율**, **배경 휘도**를 입력하시오')
             st.caption('•  배경 휘도 default value: 10 (cd/m\u00b2)')
@@ -188,7 +193,7 @@ if status2=='유리 투과율':
                 lcd_glass=0
 
             else:
-                lcd_glass=(6.3165-math.log(100/acm_slider-1)-1.19709*text)*back_il/(0.01997*(0.009*(bright)**2-0.02*bright))
+                lcd_glass=(6.3165-math.log(100/acm_slider-1)-1.19709*text)*back_il*100/(0.01997*(0.009*(bright)**2-0.02*bright))
                 if lcd_glass<0:
                     lcd_glass=0
                 elif lcd_glass>100:
@@ -208,7 +213,7 @@ if status2=='유리 투과율':
                 st.error('[계산 불가] 입력하신 인자 값을 다시 확인하세요')
                 led_glass=0
             else:
-                led_glass=(6.9123-math.log(100/acm_slider-1)-1.18998*text)*back_il/(0.02389*bright)
+                led_glass=(6.9123-math.log(100/acm_slider-1)-1.18998*text)*back_il*100/(0.02389*bright)
                 if led_glass<0:
                     led_glass=0
                 elif led_glass>100:
@@ -253,7 +258,7 @@ if status2=='글꼴높이':
                 if back_il==0:
                     lcd_text=0
                 else:
-                    lcd_text=(6.3165-math.log(100/acm_slider-1)-0.01997*(glass/100)/back_il*(0.009*(bright)**2-0.02*bright))/1.19709
+                    lcd_text=(6.3165-math.log(100/acm_slider-1)-0.01997*(0.009*(bright)**2-0.02*bright)*(glass/100)/back_il)/1.19709
                 if lcd_text<0:
                     lcd_text=0
                 elif lcd_text>100:
