@@ -102,6 +102,7 @@ with col2 :
 st.divider()
 st.markdown('###')
 st.subheader('2. 타깃 수용도에 따른 글꼴 높이 계산')
+st.markdown("###")
 acm_slider = st.slider('수용도 (%)', 0, 100, 75, 5)
 
 col3,col4 = st.columns([8,2])
