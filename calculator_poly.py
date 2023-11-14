@@ -128,7 +128,7 @@ col3,col4 = st.columns([7,2.5])
 if status2=='명(광)도':
     with col3 :
         if status =='LCD':
-            st.markdown('✅ 왼쪽 사이드바에 **글꼴 높이**, **유리 투과율**를 입력하시오')
+            st.markdown('✅ 왼쪽 사이드바에 **유리 투과율**, **글꼴 높이**를 입력하시오')
             st.caption('•  배경 휘도 default value: 1 (cd/m\u00b2)')
             lcd_bright = (acm_slider/100 - 0.004*glass - 0.23*text +0.7)/0.0018
               
@@ -151,7 +151,7 @@ if status2=='명(광)도':
 
     
         elif status == 'LED':
-            st.markdown('✅ 왼쪽 사이드바에 **글꼴 높이**, **유리 투과율**를 입력하시오')
+            st.markdown('✅ 왼쪽 사이드바에 **유리 투과율**, **글꼴 높이**를 입력하시오')
             st.caption('•  배경 휘도 default value: 10 (cd/m\u00b2)')
             led_bright=(acm_slider/100 -0.0019*glass -0.15*text +0.04)/0.000024
             if led_bright<0:
@@ -187,7 +187,7 @@ if status2=='명(광)도':
 if status2=='유리 투과율':
     with col3 :
         if status =='LCD':
-            st.markdown('✅ 왼쪽 사이드바에 **글꼴 높이**, **글꼴 명도**를 입력하시오')
+            st.markdown('✅ 왼쪽 사이드바에 **글꼴 명도**, **글꼴 높이**를 입력하시오')
             st.caption('•  배경 휘도 default value: 1 (cd/m\u00b2)')
             lcd_glass=(acm_slider/100 - 0.0018*bright - 0.23*text + 0.7)/0.004
    
@@ -204,7 +204,7 @@ if status2=='유리 투과율':
             st.dataframe(df, hide_index=True, width=500)
 
         elif status == 'LED':
-            st.markdown('✅ 왼쪽 사이드바에 **글꼴 높이**, **조명 광도**를 입력하시오')
+            st.markdown('✅ 왼쪽 사이드바에 **조명 광도**, **글꼴 높이**를 입력하시오')
             st.caption('•  배경 휘도 default value: 10 (cd/m\u00b2)')
             led_glass=(acm_slider/100 - 0.000024*bright - 0.15*text + 0.04)/0.0019
 
@@ -242,7 +242,7 @@ if status2=='유리 투과율':
 if status2=='글꼴높이':
     with col3 :
         if status =='LCD':
-            st.markdown('✅ 왼쪽 사이드바에 **유리 투과율**, **글꼴 명도**, **배경 휘도**를 입력하시오')
+            st.markdown('✅ 왼쪽 사이드바에  **글꼴 명도**, **유리 투과율**을 입력하시오')
             st.caption('•  배경 휘도 default value: 1 (cd/m\u00b2)')
             lcd_text= (acm_slider/100 - 0.0018*bright - 0.004*glass + 0.7)/0.23
             if lcd_text<0:
@@ -258,7 +258,7 @@ if status2=='글꼴높이':
             st.dataframe(df, hide_index=True, width=500)
             
         elif status == 'LED':
-            st.markdown('✅ 왼쪽 사이드바에 **유리 투과율**, **조명 광도**, **배경 휘도**를 입력하시오')
+            st.markdown('✅ 왼쪽 사이드바에 **조명 광도**, **유리 투과율**을 입력하시오')
             st.caption('•  배경 휘도 default value: 10 (cd/m\u00b2)')
             led_text = (acm_slider/100 - 0.000024*bright - 0.0019*glass + 0.04)/0.15
 
